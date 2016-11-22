@@ -1,11 +1,12 @@
 /**
-* 車を定義するクラス
+* MyTree_Trunk
 */
 
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 
 import com.jogamp.opengl.util.gl2.GLUT;
+
 
 public class MyTree_Trunk {
 

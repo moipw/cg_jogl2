@@ -8,14 +8,9 @@ import javax.media.opengl.GLAutoDrawable;
 
 public class MyScene {
 
-	// // 旗と車を1個ずつ定義する
-	// static MyFlag flag1 = null;
-	// static MyCar car1 = null;
 	static MyTree_Trunk tree = null;
 
-	/**
-	* シーンの初期化
-	*/
+
 	public static void init() {
 
 		// // 旗の初期化
@@ -30,38 +25,26 @@ public class MyScene {
 
 	}
 
-	/**
-	* シーンを描画する
-	*/
+
 	public static void draw(GLAutoDrawable drawable) {
+
 		if(drawable == null) return;
-	//
+
 		GL2 gl = drawable.getGL().getGL2();
-	//
+
 		// 物体が裏面を向いていたとしても光を当てる
 		gl.glLightModeli(GL2.GL_LIGHT_MODEL_TWO_SIDE, GL2.GL_TRUE);
-	//
-		// 旗を描画する
+
 		gl.glPushMatrix();
 		if(tree != null)
 		tree.draw(drawable);
 		gl.glPopMatrix();
-	//
-	// 	// 車を描画する
-	// 	gl.glPushMatrix();
-	// 	if(car1 != null)
-	// 	car1.draw(drawable);
-	// 	gl.glPopMatrix();
-	//
 	}
-	//
-	// /**
-	// * 動きをリセットする
-	// */
-	// public static void resetMovement() {
-	//
-	// 	// 車の回転を初期状態に戻す
-	// 	car1.resetMovement();
-	// }
+
+
+	public static void resetMovement() {
+		// 車の回転を初期状態に戻す
+		// car1.resetMovement();
+	}
 
 }
