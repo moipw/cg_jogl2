@@ -8,7 +8,7 @@ import javax.media.opengl.GLAutoDrawable;
 import com.jogamp.opengl.util.gl2.GLUT;
 
 
-public class MyTree_Trunk {
+public class MyTree {
 
 	// color
 	float silver[] = { 0.5f, 0.5f, 0.5f, 0.1f };
@@ -31,11 +31,11 @@ public class MyTree_Trunk {
 
 			gl.glTranslated(2.0, -3.0, 0.0);
 			gl.glRotated(-90.0, 0.0, 0.0, 0.0);
-			glut.glutSolidCone(0.3f,3.0f,8,10);
-
-			// gl.glTranslated(0, 2.0, 0.0);
-			// gl.glRotated(5.0, 2.0, 1.0, 0.0);
-			// glut.glutSolidCone(0.3f,3.0f,8,10);
+			glut.glutSolidCone(0.2f,3.0f,8,10);
 		}
+
+		/**
+		*
+		*/
 
 	}

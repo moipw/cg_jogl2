@@ -8,7 +8,7 @@ import javax.media.opengl.GLAutoDrawable;
 
 public class MyScene {
 
-	static MyTree_Trunk tree = null;
+	static MyTree tree = null;
 
 
 	public static void init() {
@@ -21,7 +21,7 @@ public class MyScene {
 		// car1.setColor(1.0, 0.0, 0.0);
 		// car1.setVelocity(5);
 		// car1.setTransform(1.5);
-		tree = new MyTree_Trunk();
+		tree = new MyTree();
 
 	}
 
