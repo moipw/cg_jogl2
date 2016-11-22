@@ -27,7 +27,7 @@ public class CgKeyListener implements KeyListener {
 
 			// "R"を押したとき
 			case KeyEvent.VK_R:
-			MyScene.resetMovement();
+			// MyScene.resetMovement();
 			canvas.display();
 			break;
 		}
