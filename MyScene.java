@@ -34,7 +34,7 @@ public class MyScene {
 
 		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, blue, 0);
 		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_SPECULAR, silver, 0);
-		glut.glutSolidTorus(0.3f, 10.0f, 25, 25);
+		glut.glutWireTorus(0.3f, 10.0f, 25, 25);
 
 
 		gl.glPushMatrix();
