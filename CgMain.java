@@ -11,15 +11,15 @@ import javax.media.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.Animator;
 
 public class CgMain extends JApplet {
-	static int width = 600;
-	static int height = 650;
+	static int width = 1000;
+	static int height = 800;
 	static Animator animator;
 
 	/**
 	* ウィンドウ起動時に一度だけ呼び出されるメソッド
 	*/
 	public void init() {
-		// ウィンドウのサイズを設定する
+		// set window size
 		setSize(new Dimension(width, height));
 
 		// 描画領域を設定する

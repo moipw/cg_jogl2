@@ -46,8 +46,8 @@ public class CgDrawer implements GLEventListener {
 		gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, silver, 0);
 		gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, silver, 0);
 
-		// 背景色を黒にする
-		gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		// set background color
+		gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 	}
 
@@ -115,7 +115,7 @@ public class CgDrawer implements GLEventListener {
 		gl.glLoadIdentity();
 
 		// 視点を設定する
-		glu.gluLookAt(0, 0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+		glu.gluLookAt(0, 0, 50.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
 
 		// 光源の位置を設定する

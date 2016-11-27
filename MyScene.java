@@ -5,23 +5,19 @@
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 
+import com.jogamp.opengl.util.gl2.GLUT;
 
 public class MyScene {
 
-	static MyTree tree = null;
-
+	static MyHero hero = null;
+	// color
+	static float silver[] = { 0.5f, 0.5f, 0.5f, 0.1f };
+	static float blue[] = { 0.2f, 0.2f, 0.8f, 1.0f };
+	static float red[] = { 1.0f, 0.0f, 0.0f, 1.0f };
 
 	public static void init() {
 
-		// // 旗の初期化
-		// flag1 = new MyFlag();
-		//
-		// // 車の初期化および色・速度・変位の設定
-		// car1 = new MyCar();
-		// car1.setColor(1.0, 0.0, 0.0);
-		// car1.setVelocity(5);
-		// car1.setTransform(1.5);
-		tree = new MyTree();
+		hero = new MyHero();
 
 	}
 
@@ -31,14 +27,21 @@ public class MyScene {
 		if(drawable == null) return;
 
 		GL2 gl = drawable.getGL().getGL2();
+		GLUT glut = new GLUT();
 
 		// 物体が裏面を向いていたとしても光を当てる
 		gl.glLightModeli(GL2.GL_LIGHT_MODEL_TWO_SIDE, GL2.GL_TRUE);
 
+		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, blue, 0);
+		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_SPECULAR, silver, 0);
+		glut.glutSolidTorus(0.3f, 10.0f, 25, 25);
+
+
 		gl.glPushMatrix();
-		if(tree != null)
-		tree.draw(drawable);
+		if(hero != null)
+		hero.draw(drawable);
 		gl.glPopMatrix();
+
 	}
 
 
