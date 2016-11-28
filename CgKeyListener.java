@@ -26,8 +26,16 @@ public class CgKeyListener implements KeyListener {
 			case KeyEvent.VK_S:
 				animator.start();
 				break;
+			case KeyEvent.VK_RIGHT:
+				MyScene.move_right();
+				break;
+			case KeyEvent.VK_LEFT:
+				MyScene.move_left();
+				break;
+			case KeyEvent.VK_SPACE:
+				MyScene.shoot();
+				break;
 		}
-
 	}
 
 	public void keyReleased(KeyEvent e) {
@@ -38,6 +46,10 @@ public class CgKeyListener implements KeyListener {
 		switch (key) {
 			case KeyEvent.VK_Q:
 				System.exit(0);
+				break;
+			case KeyEvent.VK_SPACE:
+				MyScene.shoot();
+				break;
 		}
 	}
 }

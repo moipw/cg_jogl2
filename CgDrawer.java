@@ -84,7 +84,13 @@ public class CgDrawer implements GLEventListener {
 		gl.glLoadIdentity();
 
 		// set view point
-		glu.gluLookAt(0, 0, 50.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+		glu.gluLookAt(MyScene.getCameraPosx(),
+									MyScene.getCameraPosy(),
+									MyScene.getCameraPosz(),
+									MyScene.getCameraAnglex(),
+									MyScene.getCameraAngley(),
+									MyScene.getCameraAnglez(),
+									0.0, 0.0, 1.0);
 
 		// set light position
 		gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, light0pos, 0);

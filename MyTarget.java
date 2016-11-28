@@ -15,9 +15,11 @@ import java.util.Arrays;
 public class MyTarget {
 
 	float v[] = { 0.0f, 0.0f };
-	float pos[] = { 0.0f, 0.0f };
-	int time = 30000;
-	int life = 3;
+	static float pos[] = { 0.0f, 0.0f };
+	static float r = 10.0f;
+	static int time = 30000;
+	static int life = 3;
+	static float speed = 0.1f;
 	Random rnd;
 
 	// color
@@ -25,37 +27,35 @@ public class MyTarget {
 	float silver[] = { 0.5f, 0.5f, 0.5f, 0.1f };
 
 
+	float calcSize(float a, float b) {
+		return (float)Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+	}
+
 	// set initial speed vector
 	public void setv() {
 		rnd = new Random();
 		v[0] = (float)Math.random()+0.000001f; v[1] = v[0]*(rnd.nextInt(2)-1);
-		float size = (float)Math.sqrt(Math.pow(v[0], 2) + Math.pow(v[1], 2));
+		float size = calcSize(v[0], v[1]);
 		v[0] = v[0]/size; v[1] = v[1]/size;
 		System.out.println("MyTarget.setv: v = " + v[0] + ", " + v[1]);
 	}
 
-	public float getPosx() {
-		return pos[0];
-	}
+	public static float getPosx() { return pos[0]; }
+	public static float getPosy() { return pos[1]; }
 
-	public float getPosy() {
-		return pos[1];
-	}
+	public static float getR() { return r; }
 
-	public int getTime() {
-		return time;
-	}
+	public int getTime() { return time; }
 
-	public void deductLife() {
-		life -= 1;
-	}
+	public int getLife() { return life; }
+	public void deductLife() { life -= 1; }
 
 	// update time, pos and v
 	public void update() {
 		time -= 1;
-		float nextpos[] = { pos[0]+v[0]*0.2f, pos[1]+v[1]*0.2f };
+		float nextpos[] = { pos[0]+v[0]*speed, pos[1]+v[1]*speed };
 		float nextv[] = Arrays.copyOf(v, v.length);
-		while (Math.pow(nextpos[0], 2) + Math.pow(nextpos[1], 2) >= 90.0f){
+		while (Math.pow(nextpos[0], 2) + Math.pow(nextpos[1], 2) >= (r-1)*10) {
 			int vx = 1, vy = 1;
 			if ( v[0] < 0.0f ) vx = -1;
 			if ( v[1] < 0.0f ) vy = -1;
@@ -72,9 +72,9 @@ public class MyTarget {
 			}
 			nextv[0] = nextv[0]*((float)Math.random()+0.000001f);
 			nextv[1] = nextv[1]*((float)Math.random()+0.000001f);
-			float size = (float)Math.sqrt(Math.pow(nextv[0], 2) + Math.pow(nextv[1], 2));
+			float size = calcSize(nextv[0], nextv[1]);
 			nextv[0] = nextv[0]/size; nextv[1] = nextv[1]/size;
-			nextpos[0] = pos[0]+nextv[0]*0.2f; nextpos[1] = pos[1]+nextv[1]*0.2f;
+			nextpos[0] = pos[0]+nextv[0]*speed; nextpos[1] = pos[1]+nextv[1]*speed;
 		}
 		pos = nextpos;
 		if (v[0] != nextv[0] || v[1] != nextv[1]){
