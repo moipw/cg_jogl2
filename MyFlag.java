@@ -6,6 +6,7 @@
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 
+
 public class MyFlag {
 
 	// 旗の柱の頂点の座標値

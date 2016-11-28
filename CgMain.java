@@ -1,5 +1,5 @@
 /**
-* 本演習のメインメソッドを含むクラス
+* CgMain: contains the Main method
 */
 
 import java.awt.*;
@@ -10,25 +10,25 @@ import javax.media.opengl.awt.GLCanvas;
 
 import com.jogamp.opengl.util.Animator;
 
+
 public class CgMain extends JApplet {
+	
 	static int width = 1000;
 	static int height = 800;
 	static Animator animator;
 
-	/**
-	* ウィンドウ起動時に一度だけ呼び出されるメソッド
-	*/
+
 	public void init() {
 		// set window size
 		setSize(new Dimension(width, height));
 
-		// 描画領域を設定する
+		// set canvas
 		CgCanvas canvas = new CgCanvas(width, height);
 		canvas.requestFocus();
 		GLCanvas glc = canvas.getGLCanvas();
 		animator = new Animator(glc);
 
-		// ウィンドウのレイアウトを決定する
+		// define the layout of window
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.add(glc, BorderLayout.CENTER);
@@ -37,38 +37,25 @@ public class CgMain extends JApplet {
 		container.setLayout(new BorderLayout());
 		container.add(panel, BorderLayout.CENTER);
 
-		// キー操作への反応を設定する
-		CgKeyListener mkl = new CgKeyListener(canvas);
+		// set key and mouse listener
+		CgKeyListener mkl = new CgKeyListener(canvas, animator);
 		canvas.addKeyListener(mkl);
 		glc.addKeyListener(mkl);
-
-		// マウス操作への反応を設定する
 		CgMouseListener mml = new CgMouseListener(canvas, animator);
 		canvas.addMouseListener(mml);
 		glc.addMouseListener(mml);
 
-		// 描画するためのシーンを初期化する
 		MyScene.init();
 	}
 
-	/**
-	* ウィンドウ操作の開始時に呼び出される
-	*/
-	public void start() {
-	}
+	public void start() {}
 
-	/**
-	* ウィンドウ操作の停止時に呼び出される
-	*/
-	public void stop() {
-	}
+	public void stop() {}
 
 
-	/**
-	* メインメソッド
-	*/
+	// main
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("I love CG!!!");
+		JFrame frame = new JFrame("--- SHOOTING GAME ---");
 		frame.setSize(width, height);
 		CgMain cgmain = new CgMain();
 
@@ -78,7 +65,6 @@ public class CgMain extends JApplet {
 
 		cgmain.start();
 
-		// ウィンドウを閉じたときの処理を定義する
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {

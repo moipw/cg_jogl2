@@ -1,56 +1,43 @@
 /**
-* キーボード操作に関する反応を扱うクラス
+* CgKeyListener
 */
 
 import java.awt.event.*;
+import com.jogamp.opengl.util.Animator;
+
 
 public class CgKeyListener implements KeyListener {
+
 	CgCanvas canvas;
+	Animator animator;
 
 
-	public CgKeyListener(CgCanvas c) {
+	public CgKeyListener(CgCanvas c, Animator a) {
 		canvas = c;
+		animator = a;
 	}
 
-
-	/**
-	* キーを押したときに呼び出されるメソッド
-	*/
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		switch (key) {
-
-			// "Q"を押したとき
 			case KeyEvent.VK_Q:
-			System.exit(0);
-			break;
-
-			// "R"を押したとき
-			case KeyEvent.VK_R:
-			// MyScene.resetMovement();
-			canvas.display();
-			break;
+				System.exit(0);
+				break;
+			case KeyEvent.VK_S:
+				animator.start();
+				break;
 		}
 
 	}
 
-	/**
-	* キーから手を離したときに呼び出されるメソッド
-	*/
 	public void keyReleased(KeyEvent e) {
-
 	}
 
-	/**
-	* キーをタイプしたときに呼び出されるメソッド
-	*/
 	public void keyTyped(KeyEvent e) {
 		int key = e.getKeyCode();
 		switch (key) {
-
-			// "Q"を押したとき
 			case KeyEvent.VK_Q:
-			System.exit(0);
+				System.exit(0);
 		}
 	}
 }

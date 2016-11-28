@@ -1,5 +1,5 @@
 /**
-* 描画領域確保のためのクラス
+* CgCanvas
 */
 
 import javax.swing.*;
@@ -8,13 +8,12 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.awt.GLCanvas;
 
 
-
 public class CgCanvas extends JPanel {
+
   static GLAutoDrawable drawable = null;
   GLCanvas glc;
   CgDrawer drawer;
   int width, height;
-
 
 
   public CgCanvas(int width, int height) {
@@ -26,7 +25,6 @@ public class CgCanvas extends JPanel {
     drawer = new CgDrawer();
     glc.addGLEventListener(drawer);
   }
-
 
   public GLCanvas getGLCanvas() {
     return glc;
