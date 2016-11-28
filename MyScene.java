@@ -56,8 +56,13 @@ public class MyScene {
 
 	public static void move_right() { th += 5.0f; th = th%360.0f; }
 	public static void move_left() { th -= 5.0f; th = th%360.0f; }
-	public static void move_up() { camera_pos[2] += 0.5f; }
-	public static void move_down() { camera_pos[2] -= 0.5f; }
+	
+	public static void move_up() {
+		if (camera_pos[2] < 20.0f) camera_pos[2] += 0.5f;
+	}
+	public static void move_down() {
+		if (camera_pos[2] > 0.0f) camera_pos[2] -= 0.5f;
+	}
 
 	public static void shoot(){
 		if (last_shot - target.getTime() > 30 || bullet.size() < 5) {
