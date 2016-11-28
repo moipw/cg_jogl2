@@ -32,6 +32,12 @@ public class CgKeyListener implements KeyListener {
 			case KeyEvent.VK_LEFT:
 				MyScene.move_left();
 				break;
+			case KeyEvent.VK_UP:
+				MyScene.move_up();
+				break;
+			case KeyEvent.VK_DOWN:
+				MyScene.move_down();
+				break;
 			case KeyEvent.VK_SPACE:
 				MyScene.shoot();
 				break;

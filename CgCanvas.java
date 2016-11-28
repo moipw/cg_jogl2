@@ -13,8 +13,11 @@ public class CgCanvas extends JPanel {
   static GLAutoDrawable drawable = null;
   GLCanvas glc;
   CgDrawer drawer;
-  int width, height;
+  static int width, height;
 
+
+  public static int getCanvasWidth() { return width; }
+  public static int getCanvasHeight() { return height; }
 
   public CgCanvas(int width, int height) {
     super();

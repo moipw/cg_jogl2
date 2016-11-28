@@ -14,7 +14,7 @@ public class CgDrawer implements GLEventListener {
 
 	GLAutoDrawable glAD;
 
-	static float light0pos[] = { 0.0f, -3.0f, -5.0f, 1.0f };
+	static float light0pos[] = { 0.0f, 3.0f, 30.0f, 1.0f };
 	static float light1pos[] = { 5.0f, 3.0f, 3.0f, 1.0f };
 
 
@@ -84,12 +84,10 @@ public class CgDrawer implements GLEventListener {
 		gl.glLoadIdentity();
 
 		// set view point
-		glu.gluLookAt(MyScene.getCameraPosx(),
-									MyScene.getCameraPosy(),
-									MyScene.getCameraPosz(),
-									MyScene.getCameraAnglex(),
-									MyScene.getCameraAngley(),
-									MyScene.getCameraAnglez(),
+		float pos[] = MyScene.getCameraPos();
+		float angle[] = MyScene.getCameraAngle();
+		glu.gluLookAt(pos[0], pos[1], pos[2],
+									angle[0], angle[1], angle[2],
 									0.0, 0.0, 1.0);
 
 		// set light position

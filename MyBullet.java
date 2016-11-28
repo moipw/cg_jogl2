@@ -14,14 +14,18 @@ import java.util.Arrays;
 
 public class MyBullet {
 
-	static int bulletnum = 0;
-	static float bulletsize = 0.5f;
+	private static int bulletnum = 0;
+	private static float bulletsize = 0.5f;
 	static float black[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	static float silver[] = { 0.5f, 0.5f, 0.5f, 0.1f };
 
-	float v[] = { 0.0f, 0.0f };
-	float pos[] = { 0.0f, 0.0f };
-	float speed = 0.1f;
+	private float v[] = { 0.0f, 0.0f };
+	private float pos[] = { 0.0f, 0.0f };
+	private float speed = 0.5f;
+
+	public MyBullet() {
+		bulletnum += 1;
+	}
 
 
 	float calcSize(float a, float b) {
@@ -40,10 +44,9 @@ public class MyBullet {
 		pos[1] = (float)Math.sin(th/180*Math.PI)*r;
 	}
 
-	public static int getnum() { return bulletnum; }
+	public static int getNum() { return bulletnum; }
 
-	public float getPosx() { return pos[0]; }
-	public float getPosy() { return pos[1]; }
+	public float[] getPos() { return pos; }
 
 	// update pos
 	public void update() {
@@ -63,6 +66,19 @@ public class MyBullet {
 		glut.glutSolidSphere(bulletsize, 20, 20);
 
 		update();
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		try {
+			super.finalize();
+		} finally {
+			destruction();
+		}
+	}
+
+	private void destruction() {
+		bulletnum -= 1;
 	}
 
 }

@@ -31,8 +31,9 @@ public class MyTarget {
 		return (float)Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
 	}
 
-	// set initial speed vector
-	public void setv() {
+	// initialize
+	public MyTarget() {
+		// set initial speed vector
 		rnd = new Random();
 		v[0] = (float)Math.random()+0.000001f; v[1] = v[0]*(rnd.nextInt(2)-1);
 		float size = calcSize(v[0], v[1]);
@@ -40,8 +41,7 @@ public class MyTarget {
 		System.out.println("MyTarget.setv: v = " + v[0] + ", " + v[1]);
 	}
 
-	public static float getPosx() { return pos[0]; }
-	public static float getPosy() { return pos[1]; }
+	public static float[] getPos() { return pos; }
 
 	public static float getR() { return r; }
 
