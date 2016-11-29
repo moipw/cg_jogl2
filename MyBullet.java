@@ -15,7 +15,10 @@ import java.util.Arrays;
 public class MyBullet {
 
 	private static int bulletnum = 0;
-	private static float bulletsize = 0.5f;
+	private static float bulletsize = 0.3f;
+	private static boolean isStopping = false;
+
+	// color
 	static float black[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	static float silver[] = { 0.5f, 0.5f, 0.5f, 0.1f };
 
@@ -27,6 +30,7 @@ public class MyBullet {
 		bulletnum += 1;
 	}
 
+	public static void stop() { isStopping = true; }
 
 	float calcSize(float a, float b) {
 		return (float)Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
@@ -50,8 +54,10 @@ public class MyBullet {
 
 	// update pos
 	public void update() {
-		pos[0] = pos[0]+v[0]*speed;
-		pos[1] = pos[1]+v[1]*speed;
+		if (!isStopping) {
+			pos[0] = pos[0]+v[0]*speed;
+			pos[1] = pos[1]+v[1]*speed;
+		}
 	}
 
 	// draw target

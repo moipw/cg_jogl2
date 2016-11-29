@@ -83,6 +83,10 @@ public class CgDrawer implements GLEventListener {
 		// initialize for geometric transform
 		gl.glLoadIdentity();
 
+		// set bg color
+		float color[] = MyScene.getBGcolor();
+		gl.glClearColor(color[0], color[1], color[2], color[3]);
+
 		// set view point
 		float pos[] = MyScene.getCameraPos();
 		float angle[] = MyScene.getCameraAngle();

@@ -16,14 +16,19 @@ public class MyScene {
 
 	static MyTarget target = null;
 	static ArrayList<MyBullet> bullet = new ArrayList<MyBullet>();
-	static int last_shot = 50000;
+	static int last_shot = 10000;
 	static float collisionDist = 1.0f;
+	static boolean result = false;
+	static boolean isEnding = false;
+	static float bgcolor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	// color
-	static float silver[] = { 0.5f, 0.5f, 0.5f, 0.1f };
+	static float silver[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	static float blue[] = { 0.2f, 0.2f, 0.8f, 1.0f };
 	static float red[] = { 1.0f, 0.0f, 0.0f, 1.0f };
+	static float brown[] = { 0.259f, 0.129f, 0.0f, 1.0f };
 	static float black[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	static float white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	// camera
 	static float camera_pos[] = { 0.0f, 0.0f, 8.0f };
@@ -34,15 +39,16 @@ public class MyScene {
 	public static float[] getCameraPos() { return camera_pos; }
 	public static float[] getCameraAngle() { return camera_angle; }
 
+	public static float[] getBGcolor() { return bgcolor; }
+
 	public static void init() {
 		target = new MyTarget();
+		bgcolor = white;
 	}
 
 	static void calcCamera() {
-		// float t = (float)((int)th/10)*10;
-		float t = th;
-		camera_pos[0] = (float)Math.cos(t/180*Math.PI)*40;
-		camera_pos[1] = (float)Math.sin(t/180*Math.PI)*40;
+		camera_pos[0] = (float)Math.cos(th/180*Math.PI)*40;
+		camera_pos[1] = (float)Math.sin(th/180*Math.PI)*40;
 		// camera_angle[0] = -camera_pos[0];
 		// camera_angle[1] = -camera_pos[1];
 		camera_angle[0] = 0.0f;
@@ -56,7 +62,7 @@ public class MyScene {
 
 	public static void move_right() { th += 5.0f; th = th%360.0f; }
 	public static void move_left() { th -= 5.0f; th = th%360.0f; }
-	
+
 	public static void move_up() {
 		if (camera_pos[2] < 20.0f) camera_pos[2] += 0.5f;
 	}
@@ -76,6 +82,7 @@ public class MyScene {
 	}
 
 	static void drawString(GL2 gl, String str, int w, int h, int x0, int y0) {
+		// ! unused !
 		GLUT glut = new GLUT();
 		GLUgl2 glu = new GLUgl2();
 
@@ -110,6 +117,7 @@ public class MyScene {
 			if (calcDist(tpos, bpos) < collisionDist){
 				used.add(b);
 				target.deductLife();
+				target.resetv();
 				System.out.println("MyScene.checkCollision: rest life = " + target.getLife());
 			} else if (calcDist(o, bpos) >= target.getR()+10) {
 				used.add(b);
@@ -118,22 +126,24 @@ public class MyScene {
 		for (MyBullet b: used) {
 			bullet.remove(b);
 			try { b.finalize(); } catch (Throwable e){
-				System.out.println("MyScene.checkCollision: finalization error");
+				System.out.println("error: " + e);
 			};
 		}
 	}
 
 	public static void draw(GLAutoDrawable drawable) {
-		if(drawable == null) return;
-
-		checkCollision();
-
-		if (target.getTime() < 0 || target.getLife() <= 0) {
-			// ending
+		if (drawable == null) return;
+		if (isEnding && target.end()) {
+			try { Thread.sleep(1500); } catch (InterruptedException e) {
+				System.out.println("error: " + e);
+			}
+			System.exit(0);
 		}
 
 		GL2 gl = drawable.getGL().getGL2();
 		GLUT glut = new GLUT();
+
+		checkCollision();
 
 		// light
 		gl.glLightModeli(GL2.GL_LIGHT_MODEL_TWO_SIDE, GL2.GL_TRUE);
@@ -144,10 +154,22 @@ public class MyScene {
 		// 					 10, 10);
 
 		// field
-		gl.glTranslated(0.0, 0.0, -1.0);
-		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, blue, 0);
+		gl.glTranslated(0.0, 0.0, -2.0);
+		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, white, 0);
 		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_SPECULAR, silver, 0);
 		glut.glutWireTorus(0.1f, target.getR(), 10, 100);
+
+		if ((target.getTime() < 0 || target.getLife() <= 0) && !isEnding) {
+			// ending
+			isEnding = true;
+			if (bullet.size() > 0) bullet.get(0).stop();
+			target.stop();
+			if (target.getLife() > 0) bgcolor = blue;
+			else {
+				bgcolor = red;
+				result = true;
+			}
+		}
 
 		// target
 		gl.glPushMatrix();
