@@ -25,6 +25,7 @@ public class CgKeyListener implements KeyListener {
 				break;
 			case KeyEvent.VK_S:
 				animator.start();
+				MyScene.startDrawing();
 				break;
 			case KeyEvent.VK_RIGHT:
 				MyScene.move_right();

@@ -19,6 +19,7 @@ public class MyScene {
 	static int last_shot = 10000;
 	static float collisionDist = 1.0f;
 	static boolean result = false;
+	static boolean isRunning = false;
 	static boolean isEnding = false;
 	static float bgcolor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
@@ -35,6 +36,8 @@ public class MyScene {
 	static float camera_angle[] = { 0.0f, 0.0f, 0.0f };
 	static float th = 0.0f;
 
+
+	public static void startDrawing() { isRunning = true; }
 
 	public static float[] getCameraPos() { return camera_pos; }
 	public static float[] getCameraAngle() { return camera_angle; }
@@ -60,18 +63,24 @@ public class MyScene {
 		return (float)Math.sqrt(Math.pow(x[0]-y[0], 2) + Math.pow(x[1]-y[1], 2));
 	}
 
-	public static void move_right() { th += 5.0f; th = th%360.0f; }
-	public static void move_left() { th -= 5.0f; th = th%360.0f; }
+	public static void move_right() {
+		if (isRunning) th += 5.0f;
+		th = th%360.0f;
+	}
+	public static void move_left() {
+		if (isRunning) th -= 5.0f;
+		th = th%360.0f;
+	}
 
 	public static void move_up() {
-		if (camera_pos[2] < 20.0f) camera_pos[2] += 0.5f;
+		if (camera_pos[2] < 20.0f && isRunning) camera_pos[2] += 0.5f;
 	}
 	public static void move_down() {
-		if (camera_pos[2] > 0.0f) camera_pos[2] -= 0.5f;
+		if (camera_pos[2] > 0.0f && isRunning) camera_pos[2] -= 0.5f;
 	}
 
 	public static void shoot(){
-		if (last_shot - target.getTime() > 30 || bullet.size() < 5) {
+		if ((last_shot - target.getTime() > 30 || bullet.size() < 5) && isRunning) {
 			MyBullet b = new MyBullet();
 			b.setInitPos(th);
 			b.setv(-1*camera_pos[0], -1*camera_pos[1]);
@@ -150,8 +159,8 @@ public class MyScene {
 
 		// string
 		// drawString(gl, "abcde!",
-		// 					 CgCanvas.getCanvasWidth(), CgCanvas.getCanvasHeight(),
-		// 					 10, 10);
+		// 						CgCanvas.getCanvasWidth(), CgCanvas.getCanvasHeight(),
+		// 						10, 10);
 
 		// field
 		gl.glTranslated(0.0, 0.0, -2.0);

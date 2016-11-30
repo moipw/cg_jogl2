@@ -14,8 +14,8 @@ public class CgDrawer implements GLEventListener {
 
 	GLAutoDrawable glAD;
 
-	static float light0pos[] = { 0.0f, 3.0f, 30.0f, 1.0f };
-	static float light1pos[] = { 5.0f, 3.0f, 3.0f, 1.0f };
+	static float light0pos[] = { 0.0f, 30.0f, 30.0f, 1.0f };
+	static float light1pos[] = { 0.0f, -30.0f, 0.0f, 1.0f };
 
 
 	public void init(GLAutoDrawable drawable) {

@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 public class MyTarget {
 
-	private float v[] = { 0.0f, 0.0f };
+	private static float v[] = { 1.0f, 0.0f };
 	private static float pos[] = { 0.0f, 0.0f };
 	private static float r = 10.0f;
 	private static float targetsize = 1.0f;
@@ -26,35 +26,47 @@ public class MyTarget {
 	private Random rnd;
 
 	// color
-	float red[] = { 1.0f, 0.0f, 0.0f, 1.0f };
-	float silver[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-	float brown[] = { 0.5f, 0.3f, 0.2f, 1.0f };
-	float yellow[] = { 1.0f, 1.0f, 0.0f, 1.0f };
+	static float white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	static float black[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	static float red[] = { 1.0f, 0.0f, 0.0f, 1.0f };
+	static float silver[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	static float brown[] = { 0.5f, 0.3f, 0.2f, 1.0f };
+	static float yellow[] = { 1.0f, 1.0f, 0.0f, 1.0f };
+	static float blue[] = { 0.0f, 0.0f, 1.0f, 1.0f };
+
+	// charactor
+	private static float eye_pos[] = { 0.9f, 0.4f, 0.6f };
+	private static float nose_pos[] = { 1.0f, 0.0f, 0.2f };
 
 
-
-	float calcSize(float a, float b) {
-		return (float)Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+	private static float[] set_vector_size1(float[] v){
+		float s = 0.0f;
+		for (float f: v){ s += (float)Math.pow(f, 2); }
+		s = (float)Math.sqrt(s);
+		for (int i = 0; i < v.length; i++) { v[i] = v[i]/s; }
+		return v;
 	}
 
 	// initialize
 	public MyTarget() {
 		// set initial speed vector
 		rnd = new Random();
-		v[0] = (float)Math.random()*(rnd.nextInt(1) == 0 ? 1.0f : -1.0f);
-		v[1] = (float)Math.random()*(rnd.nextInt(1) == 0 ? 1.0f : -1.0f);
-		float size = calcSize(v[0], v[1]);
-		v[0] = v[0]/size; v[1] = v[1]/size;
+		// v[0] = (float)Math.random()*(rnd.nextInt(1) == 0 ? 1.0f : -1.0f);
+		// v[1] = (float)Math.random()*(rnd.nextInt(1) == 0 ? 1.0f : -1.0f);
+		// float size = calcSize(v[0], v[1]);
+		// v[0] = v[0]/size; v[1] = v[1]/size;
 		System.out.println("MyTarget: v = " + v[0] + ", " + v[1]);
+
+		// set parts positions
+		eye_pos = set_vector_size1(eye_pos);
+		nose_pos = set_vector_size1(nose_pos);
 	}
 
 	public void resetv() {
 		float nextv[] = { 0.0f, 0.0f };
 		nextv[0] = -1*v[0]*((float)Math.random()+0.000001f);
 		nextv[1] = -1*v[1]*((float)Math.random()+0.000001f);
-		float size = calcSize(nextv[0], nextv[1]);
-		v[0] = nextv[0]/size;
-		v[1] = nextv[1]/size;
+		v = set_vector_size1(nextv);
 		System.out.println("MyTarget.resetv: v = " + v[0] + ", " + v[1]);
 	}
 
@@ -99,8 +111,7 @@ public class MyTarget {
 				}
 				nextv[0] = nextv[0]*((float)Math.random());
 				nextv[1] = nextv[1]*((float)Math.random());
-				float size = calcSize(nextv[0], nextv[1]);
-				nextv[0] = nextv[0]/size; nextv[1] = nextv[1]/size;
+				nextv = set_vector_size1(nextv);
 				nextpos[0] = pos[0]+nextv[0]*speed; nextpos[1] = pos[1]+nextv[1]*speed;
 			}
 			pos = nextpos;
@@ -116,11 +127,38 @@ public class MyTarget {
 		GL2 gl = drawable.getGL().getGL2();
 		GLUT glut = new GLUT();
 
-		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, brown, 0);
+
 		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_SPECULAR, silver, 0);
 
+		// face
+		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, brown, 0);
 		gl.glTranslated(pos[0], pos[1], 0.0f);
 		glut.glutSolidSphere(targetsize, 25, 25);
+
+		gl.glRotated(Math.atan2(v[1], v[0])/Math.PI*180, 0.0, 0.0, 1.0);
+		// System.out.println(Math.atan2(v[1], v[0])/Math.PI*180);
+
+		// nose
+		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, black, 0);
+		gl.glTranslated(nose_pos[0], 0.0, nose_pos[2]);
+		// glut.glutSolidCone(0.4, 0.7, 10, 10);
+		glut.glutSolidSphere(0.1, 10, 10);
+		gl.glTranslated(-1*nose_pos[0], 0.0, -1*nose_pos[2]);
+
+		// eyes
+		gl.glTranslated(eye_pos[0], eye_pos[1], eye_pos[2]);
+		glut.glutSolidSphere(0.1, 10, 10);
+		gl.glTranslated(0.0, -1*2*eye_pos[1], 0.0);
+		glut.glutSolidSphere(0.1, 10, 10);
+		gl.glTranslated(-1*eye_pos[0], eye_pos[1], -1*eye_pos[2]);
+
+
+		// ears
+
+		// coller
+		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, red, 0);
+		gl.glTranslated(0.0f, 0.0f, -1*targetsize*0.8);
+		glut.glutSolidTorus(0.1f, targetsize*0.7, 10, 25);
 
 		update();
 	}
