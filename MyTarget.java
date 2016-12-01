@@ -159,7 +159,6 @@ public class MyTarget {
 		gl.glTranslated(-1*nose_pos[0]*targetsize, 0.0f, -1*nose_pos[2]*targetsize);
 
 		// eyes
-
 		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, black, 0);
 		gl.glTranslated(eye_pos[0]*targetsize, eye_pos[1]*targetsize, eye_pos[2]*targetsize);
 		glut.glutSolidSphere(0.1f, 10, 10);
