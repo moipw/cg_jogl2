@@ -56,8 +56,7 @@ public class MyTarget {
 		rnd = new Random();
 		v[0] = (float)Math.random()*(rnd.nextInt(1) == 0 ? 1.0f : -1.0f);
 		v[1] = (float)Math.random()*(rnd.nextInt(1) == 0 ? 1.0f : -1.0f);
-		float size = calcSize(v[0], v[1]);
-		v[0] = v[0]/size; v[1] = v[1]/size;
+		v = set_vector_size1(v);
 		System.out.println("MyTarget: v = " + v[0] + ", " + v[1]);
 
 		// set parts positions

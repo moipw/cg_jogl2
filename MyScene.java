@@ -163,7 +163,7 @@ public class MyScene {
 		// 						10, 10);
 
 		// field
-		gl.glTranslated(0.0, 0.0, -2.0);
+		gl.glTranslated(0.0f, 0.0f, -2.0f);
 		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, black, 0);
 		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_SPECULAR, silver, 0);
 		glut.glutSolidTorus(0.1f, target.getR(), 10, 100);
