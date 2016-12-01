@@ -26,17 +26,20 @@ public class MyTarget {
 	private Random rnd;
 
 	// color
+	static float silver[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	static float white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	static float black[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	static float red[] = { 1.0f, 0.0f, 0.0f, 1.0f };
-	static float silver[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	static float brown[] = { 0.5f, 0.3f, 0.2f, 1.0f };
 	static float yellow[] = { 1.0f, 1.0f, 0.0f, 1.0f };
 	static float blue[] = { 0.0f, 0.0f, 1.0f, 1.0f };
 
-	// charactor
+	// face
 	private static float eye_pos[] = { 0.9f, 0.4f, 0.6f };
 	private static float nose_pos[] = { 1.0f, 0.0f, 0.2f };
+	private static float ear_engle = 35.0f;
+	private static float ear_height = 0.7f;
+	private static float ear_size[] = {0.5f, 0.6f};
 
 
 	private static float[] set_vector_size1(float[] v){
@@ -81,7 +84,7 @@ public class MyTarget {
 	public int getTime() { return time; }
 
 	public int getLife() { return life; }
-	public void deductLife() { life -= 1; }
+	public void deductLife() { life -= 1; speed += 0.1f; }
 
 
 	// update time, pos and v
@@ -131,29 +134,39 @@ public class MyTarget {
 		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_SPECULAR, silver, 0);
 
 		// face
-		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, brown, 0);
+		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, white, 0);
 		gl.glTranslated(pos[0], pos[1], 0.0f);
 		glut.glutSolidSphere(targetsize, 25, 25);
 
 		gl.glRotated(Math.atan2(v[1], v[0])/Math.PI*180, 0.0, 0.0, 1.0);
 		// System.out.println(Math.atan2(v[1], v[0])/Math.PI*180);
 
+		// ears
+		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, brown, 0);
+		gl.glRotated(ear_engle, 1.0, 0.0, 0.0);
+		gl.glTranslated(0.0f, 0.0f, ear_height*targetsize);
+		glut.glutSolidCone(ear_size[0]*targetsize, ear_size[1]*targetsize, 10, 10);
+		gl.glTranslated(0.0f, 0.0f, -1*ear_height*targetsize);
+		gl.glRotated(-1*2*ear_engle, 1.0, 0.0, 0.0);
+		gl.glTranslated(0.0f, 0.0f, ear_height*targetsize);
+		glut.glutSolidCone(ear_size[0]*targetsize, ear_size[1]*targetsize, 10, 10);
+		gl.glTranslated(0.0f, 0.0f, -1*ear_height*targetsize);
+		gl.glRotated(ear_engle, 1.0, 0.0, 0.0);
+
 		// nose
-		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, black, 0);
-		gl.glTranslated(nose_pos[0], 0.0, nose_pos[2]);
-		// glut.glutSolidCone(0.4, 0.7, 10, 10);
-		glut.glutSolidSphere(0.1, 10, 10);
-		gl.glTranslated(-1*nose_pos[0], 0.0, -1*nose_pos[2]);
+		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, yellow, 0);
+		gl.glTranslated(nose_pos[0]*targetsize, 0.0, nose_pos[2]*targetsize);
+		glut.glutSolidSphere(0.1*targetsize, 10, 10);
+		gl.glTranslated(-1*nose_pos[0]*targetsize, 0.0, -1*nose_pos[2]*targetsize);
 
 		// eyes
-		gl.glTranslated(eye_pos[0], eye_pos[1], eye_pos[2]);
-		glut.glutSolidSphere(0.1, 10, 10);
-		gl.glTranslated(0.0, -1*2*eye_pos[1], 0.0);
-		glut.glutSolidSphere(0.1, 10, 10);
-		gl.glTranslated(-1*eye_pos[0], eye_pos[1], -1*eye_pos[2]);
 
-
-		// ears
+		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, black, 0);
+		gl.glTranslated(eye_pos[0]*targetsize, eye_pos[1]*targetsize, eye_pos[2]*targetsize);
+		glut.glutSolidSphere(0.1, 10, 10);
+		gl.glTranslated(0.0, -1*2*eye_pos[1]*targetsize, 0.0);
+		glut.glutSolidSphere(0.1, 10, 10);
+		gl.glTranslated(-1*eye_pos[0]*targetsize, eye_pos[1]*targetsize, -1*eye_pos[2]*targetsize);
 
 		// coller
 		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, red, 0);

@@ -28,7 +28,7 @@ public class MyScene {
 	static float blue[] = { 0.2f, 0.2f, 0.8f, 1.0f };
 	static float red[] = { 1.0f, 0.0f, 0.0f, 1.0f };
 	static float brown[] = { 0.259f, 0.129f, 0.0f, 1.0f };
-	static float black[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	static float black[] = { 1.0f, 1.0f, 1.0f, 0.4f };
 	static float white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	// camera
@@ -164,9 +164,9 @@ public class MyScene {
 
 		// field
 		gl.glTranslated(0.0, 0.0, -2.0);
-		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, white, 0);
+		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE, black, 0);
 		gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_SPECULAR, silver, 0);
-		glut.glutWireTorus(0.1f, target.getR(), 10, 100);
+		glut.glutSolidTorus(0.1f, target.getR(), 10, 100);
 
 		if ((target.getTime() < 0 || target.getLife() <= 0) && !isEnding) {
 			// ending
